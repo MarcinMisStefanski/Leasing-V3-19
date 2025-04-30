@@ -1,13 +1,48 @@
+
 <!DOCTYPE html>
 <html lang="pl">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Kalkulator Leasingu</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/src/style.css" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Kalkulator Leasingu V5</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <img src="logo.png" alt="EVdlaCiebie" class="logo">
+        <h1>Kalkulator Leasingu</h1>
+        <div class="input-group">
+            <label for="carPrice">Cena auta brutto (zł):</label>
+            <input type="number" id="carPrice" value="200000">
+        </div>
+        <div class="input-group">
+            <label for="downPayment">Wkład własny (%):</label>
+            <input type="range" id="downPaymentSlider" min="0" max="45" value="10">
+            <input type="number" id="downPaymentValue" value="10">
+        </div>
+        <div class="input-group">
+            <label for="leasingMonths">Okres leasingu (mies.):</label>
+            <select id="leasingMonths">
+                <option value="24">24</option>
+                <option value="35">35</option>
+                <option value="47" selected>47</option>
+                <option value="59">59</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="buyout">Wartość wykupu (%):</label>
+            <input type="range" id="buyoutSlider" min="1" max="40" value="20">
+            <input type="number" id="buyoutValue" value="20">
+        </div>
+        <div class="input-group">
+            <label for="rrso">RRSO (%):</label>
+            <input type="number" id="rrso" value="7">
+        </div>
+        <div class="results">
+            <p>Miesięczna rata: <span id="monthlyPayment">0 zł</span></p>
+            <p>Suma opłat: <span id="totalCost">0 zł</span></p>
+            <p>Całkowity koszt leasingu: <span id="totalPercent">100%</span></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
 </html>
