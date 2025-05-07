@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function LeasingCalculator() {
   const [price, setPrice] = useState(229990);
@@ -15,6 +16,15 @@ export default function LeasingCalculator() {
   };
 
   const leasingMargin = 2.5;
+
+  // Walidacja wkładu i wykupu przy zmianie okresu
+  useEffect(() => {
+    const wykupLimity = { 24: 60, 35: 50, 47: 40, 59: 30 };
+    const minWklad = term === 24 ? 18 : 0;
+
+    if (finalPercent > wykupLimity[term]) setFinalPercent(wykupLimity[term]);
+    if (initialPercent < minWklad) setInitialPercent(minWklad);
+  }, [term]);
 
   useEffect(() => {
     const priceNet = price / 1.23;
@@ -35,7 +45,10 @@ export default function LeasingCalculator() {
 
   return (
     <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-2xl p-8 border">
-      <h1 className="text-3xl font-bold text-red-600 mb-6 text-center">Kalkulator Leasingu</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-red-600">Kalkulator Leasingu</h1>
+        <img src="/logo.png" alt="Logo" className="h-10" />
+      </div>
 
       <div className="mb-6">
         <label className="block text-sm font-medium text-gray-700 mb-1">Cena brutto (PLN)</label>
@@ -48,10 +61,12 @@ export default function LeasingCalculator() {
       </div>
 
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Wkład własny: {initialPercent}%</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Wkład własny: <span className="text-red-600 font-semibold">{initialPercent}%</span>
+        </label>
         <input
           type="range"
-          min={0}
+          min={term === 24 ? 18 : 0}
           max={45}
           value={initialPercent}
           onChange={(e) => setInitialPercent(Number(e.target.value))}
@@ -60,7 +75,9 @@ export default function LeasingCalculator() {
       </div>
 
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Wykup końcowy: {finalPercent}%</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Wykup końcowy: <span className="text-red-600 font-semibold">{finalPercent}%</span>
+        </label>
         <input
           type="range"
           min={1}
@@ -73,23 +90,16 @@ export default function LeasingCalculator() {
 
       <div className="mb-6">
         <label className="block text-sm font-medium text-gray-700 mb-2">Okres leasingu (miesiące)</label>
-        <input
-          type="range"
-          min={24}
-          max={59}
-          step={1}
-          list="months"
+        <select
+          className="w-full p-3 border-2 border-gray-300 rounded-lg text-lg"
           value={term}
           onChange={(e) => setTerm(Number(e.target.value))}
-          className="w-full accent-red-600"
-        />
-        <datalist id="months">
-          <option value="24" label="24" />
-          <option value="35" label="35" />
-          <option value="47" label="47" />
-          <option value="59" label="59" />
-        </datalist>
-        <p className="text-center text-gray-700 font-semibold mt-1">{term} miesięcy</p>
+        >
+          <option value={24}>24 miesiące</option>
+          <option value={35}>35 miesięcy</option>
+          <option value={47}>47 miesięcy</option>
+          <option value={59}>59 miesięcy</option>
+        </select>
       </div>
 
       <div className="text-center mt-8 bg-gray-50 py-6 rounded-xl">
