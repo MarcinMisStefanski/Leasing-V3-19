@@ -7,7 +7,7 @@ export default function Home() {
       <Head>
         <title>Kalkulator Leasingu</title>
       </Head>
-      <main className="min-h-screen bg-gray-50 p-4">
+      <main className="min-h-screen bg-white p-6">
         <LeasingCalculator />
       </main>
     </div>
