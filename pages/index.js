@@ -5,9 +5,9 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Kalkulator Leasingu EVdlaCiebie</title>
+        <title>Leasing EVdlaCiebie</title>
       </Head>
-      <main className="min-h-screen bg-white text-gray-800 p-6 font-sans">
+      <main className="min-h-screen bg-white text-gray-900 p-6 font-sans">
         <LeasingCalculator />
       </main>
     </>

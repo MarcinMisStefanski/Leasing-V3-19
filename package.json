@@ -1,5 +1,5 @@
 {
-  "name": "evleasing-calculator-v3",
+  "name": "evleasing-calculator-v4-etap1",
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
@@ -12,8 +12,8 @@
     "react-dom": "latest"
   },
   "devDependencies": {
+    "tailwindcss": "^3.3.2",
     "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.3.2"
+    "postcss": "^8.4.21"
   }
 }
