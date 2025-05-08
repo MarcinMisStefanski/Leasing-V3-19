@@ -37,12 +37,13 @@ export default function LeasingCalculator() {
   const priceNet = price / 1.23;
   const initialPayment = (initialPercent / 100) * priceNet;
   const finalPayment = (finalPercent / 100) * priceNet;
+  const rateBrutto = rate * 1.23;
 
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-10 font-sans">
       <div className="flex justify-between items-center mb-8">
         <img src="/logo.png" alt="EVdlaCiebie" className="h-12 object-contain" />
-        <h1 className="text-3xl font-bold text-red-600">Leasing EVdlaCiebie</h1>
+        <h1 className="text-4xl font-extrabold text-red-600">Kalkulator Leasingu</h1>
       </div>
 
       <div className="text-xl font-medium text-center mb-6">
@@ -82,8 +83,10 @@ export default function LeasingCalculator() {
       )}
 
       <div className="text-center bg-gradient-to-br from-blue-900 to-blue-700 text-yellow-400 py-6 rounded-xl mt-8 shadow-md">
-        <p className="text-4xl font-extrabold">{isNaN(rate) ? "—" : `${rate.toFixed(2)} zł`}</p>
-        <p className="text-sm font-medium text-white">netto / miesiąc</p>
+        <p className="text-4xl font-extrabold">
+          {isNaN(rate) ? "—" : `${rate.toFixed(2)} zł netto / ${(rateBrutto).toFixed(2)} zł brutto`}
+        </p>
+        <p className="text-sm font-medium text-white">rata miesięczna</p>
       </div>
     </div>
   );
