@@ -7,7 +7,7 @@ export default function Home() {
       <Head>
         <title>Leasing EVdlaCiebie</title>
       </Head>
-      <main className="min-h-screen bg-white text-gray-900 p-6 font-sans">
+      <main className="min-h-screen bg-gray-100 text-gray-900 p-6 font-sans">
         <LeasingCalculator />
       </main>
     </>

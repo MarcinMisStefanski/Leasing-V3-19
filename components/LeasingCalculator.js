@@ -42,43 +42,53 @@ export default function LeasingCalculator() {
   const finalPayment = (finalPercent / 100) * priceNet;
 
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-lg px-10 py-12 border text-gray-900">
-      <div className="flex items-center justify-between mb-8">
-        <Image src="/logo.png" alt="EVdlaCiebie" width={160} height={40} />
-        <h1 className="text-3xl font-extrabold text-red-600">Kalkulator Leasingu</h1>
+    <div className="max-w-3xl mx-auto px-4 py-8 bg-white rounded-2xl shadow-lg text-gray-900 font-sans">
+      <div className="flex justify-center mb-4">
+        <Image src="/logo.png" alt="EVdlaCiebie" width={160} height={50} />
       </div>
 
-      <div className="text-center text-xl font-semibold mb-10">
-        Cena brutto: <span className="text-2xl text-red-600 font-bold">{price.toLocaleString()} zł</span>
+      <h1 className="text-3xl md:text-4xl font-extrabold text-center mb-6 text-gray-800">
+        Kalkulator Leasingu
+      </h1>
+
+      <div className="text-center text-xl font-medium mb-4">
+        Cena brutto (PLN):
+        <input
+          type="number"
+          value={price}
+          onChange={(e) => setPrice(Number(e.target.value))}
+          className="text-center text-2xl font-bold w-40 ml-4 border-b-2 border-red-600 focus:outline-none"
+        />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="space-y-6 text-center mb-6">
         <div>
-          <label className="block text-lg font-semibold mb-2">Wkład własny: {initialPercent}% ({initialPayment.toLocaleString(undefined, {maximumFractionDigits: 0})} zł)</label>
+          <p className="text-lg font-semibold mb-1">Wkład własny: {initialPercent}% ({initialPayment.toLocaleString(undefined, {maximumFractionDigits: 0})} zł)</p>
           <input type="range" min={0} max={45} value={initialPercent} onChange={(e) => setInitialPercent(Number(e.target.value))} className="w-full accent-red-600" />
         </div>
 
         <div>
-          <label className="block text-lg font-semibold mb-2">Wykup końcowy: {finalPercent}% ({finalPayment.toLocaleString(undefined, {maximumFractionDigits: 0})} zł)</label>
+          <p className="text-lg font-semibold mb-1">Wykup końcowy: {finalPercent}% ({finalPayment.toLocaleString(undefined, {maximumFractionDigits: 0})} zł)</p>
           <input type="range" min={term === 24 ? 18 : 1} max={term === 24 ? 60 : term === 35 ? 50 : term === 47 ? 40 : 30} value={finalPercent} onChange={(e) => setFinalPercent(Number(e.target.value))} className="w-full accent-red-600" />
         </div>
 
         <div>
-          <label className="block text-lg font-semibold mb-2">Okres leasingu: {term} miesięcy</label>
+          <p className="text-lg font-semibold mb-1">Okres leasingu: {term} miesięcy</p>
           <input type="range" min={24} max={59} step={1} value={term} onChange={(e) => setTerm(Number(e.target.value))} className="w-full accent-red-600" />
-        </div>
-
-        <div className="text-center bg-gray-100 p-6 rounded-xl flex flex-col justify-center">
-          <p className="text-lg text-gray-800 mb-1">Rata netto:</p>
-          <p className="text-5xl font-extrabold text-red-600">{rate.toFixed(2)} zł</p>
         </div>
       </div>
 
       {warning && (
-        <div className="text-red-600 text-center font-semibold text-md mt-6">
+        <div className="text-red-600 text-center font-semibold text-sm mb-6">
           ⚠️ Wkład własny musi wynosić minimum 30 000 zł netto, aby skorzystać z dotacji „NaszEauto”.
         </div>
       )}
+
+      <div className="text-center bg-gradient-to-br from-blue-900 to-blue-700 text-yellow-400 py-6 rounded-2xl shadow-inner mt-6">
+        <p className="text-xl font-semibold line-through text-white/70 mb-1">2 514,27 zł</p>
+        <p className="text-5xl font-extrabold">{rate.toFixed(2)} zł</p>
+        <p className="text-sm font-medium mt-1 text-white">netto / miesiąc</p>
+      </div>
     </div>
   );
 }
