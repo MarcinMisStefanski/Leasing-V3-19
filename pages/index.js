@@ -1,5 +1,6 @@
 import Head from "next/head";
 import LeasingCalculator from "../components/LeasingCalculator";
+import OfferForm from "../components/OfferForm";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       </Head>
       <main className="min-h-screen bg-gray-100 text-gray-900 p-6 font-sans">
         <LeasingCalculator />
+        <OfferForm />
       </main>
     </>
   );
