@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Image from "next/image";
 
 export default function LeasingCalculator() {
   const [price, setPrice] = useState(229990);
@@ -17,13 +16,16 @@ export default function LeasingCalculator() {
 
   const leasingMargin = 2.5;
 
-  // Walidacja wkładu i wykupu przy zmianie okresu
   useEffect(() => {
-    const wykupLimity = { 24: 60, 35: 50, 47: 40, 59: 30 };
-    const minWklad = term === 24 ? 18 : 0;
-
-    if (finalPercent > wykupLimity[term]) setFinalPercent(wykupLimity[term]);
-    if (initialPercent < minWklad) setInitialPercent(minWklad);
+    const limity = {
+      24: { min: 18, max: 60 },
+      35: { min: 1, max: 50 },
+      47: { min: 1, max: 40 },
+      59: { min: 1, max: 30 },
+    };
+    const { min, max } = limity[term];
+    if (finalPercent < min) setFinalPercent(min);
+    if (finalPercent > max) setFinalPercent(max);
   }, [term]);
 
   useEffect(() => {
@@ -66,7 +68,7 @@ export default function LeasingCalculator() {
         </label>
         <input
           type="range"
-          min={term === 24 ? 18 : 0}
+          min={0}
           max={45}
           value={initialPercent}
           onChange={(e) => setInitialPercent(Number(e.target.value))}
@@ -80,7 +82,7 @@ export default function LeasingCalculator() {
         </label>
         <input
           type="range"
-          min={1}
+          min={term === 24 ? 18 : 1}
           max={term === 24 ? 60 : term === 35 ? 50 : term === 47 ? 40 : 30}
           value={finalPercent}
           onChange={(e) => setFinalPercent(Number(e.target.value))}

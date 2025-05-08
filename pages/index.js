@@ -3,13 +3,13 @@ import LeasingCalculator from "../components/LeasingCalculator";
 
 export default function Home() {
   return (
-    <div>
+    <>
       <Head>
-        <title>Kalkulator Leasingu</title>
+        <title>Kalkulator Leasingu EVdlaCiebie</title>
       </Head>
-      <main className="min-h-screen bg-white p-6 font-sans">
+      <main className="min-h-screen bg-white text-gray-800 p-6 font-sans">
         <LeasingCalculator />
       </main>
-    </div>
+    </>
   );
 }
