@@ -19,6 +19,8 @@ export default function LeasingCalculator() {
   }, [term]);
 
   useEffect(() => {
+    if (!rrsoBase[term]) return;
+
     const net = price / 1.23;
     const initial = (initialPercent / 100) * net;
     const final = (finalPercent / 100) * net;
@@ -37,9 +39,9 @@ export default function LeasingCalculator() {
   const finalPayment = (finalPercent / 100) * priceNet;
 
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-10">
+    <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-10 font-sans">
       <div className="flex justify-between items-center mb-8">
-        <img src="/logo.png" alt="logo" className="h-12 object-contain" />
+        <img src="/logo.png" alt="EVdlaCiebie" className="h-12 object-contain" />
         <h1 className="text-3xl font-bold text-red-600">Leasing EVdlaCiebie</h1>
       </div>
 
@@ -63,8 +65,13 @@ export default function LeasingCalculator() {
           <input type="range" min={term === 24 ? 18 : 1} max={term === 24 ? 60 : term === 35 ? 50 : term === 47 ? 40 : 30} value={finalPercent} onChange={(e) => setFinalPercent(Number(e.target.value))} className="w-full accent-red-600" />
         </div>
         <div>
-          <p className="font-semibold text-lg mb-1">Okres leasingu: {term} miesięcy</p>
-          <input type="range" min={24} max={59} step={1} list="steps" value={term} onChange={(e) => setTerm(Number(e.target.value))} className="w-full accent-red-600" />
+          <p className="font-semibold text-lg mb-1">Okres leasingu:</p>
+          <select value={term} onChange={(e) => setTerm(Number(e.target.value))} className="w-full p-3 border rounded-md text-lg">
+            <option value={24}>24 miesiące</option>
+            <option value={35}>35 miesięcy</option>
+            <option value={47}>47 miesięcy</option>
+            <option value={59}>59 miesięcy</option>
+          </select>
         </div>
       </div>
 
@@ -75,7 +82,7 @@ export default function LeasingCalculator() {
       )}
 
       <div className="text-center bg-gradient-to-br from-blue-900 to-blue-700 text-yellow-400 py-6 rounded-xl mt-8 shadow-md">
-        <p className="text-4xl font-extrabold">{rate.toFixed(2)} zł</p>
+        <p className="text-4xl font-extrabold">{isNaN(rate) ? "—" : `${rate.toFixed(2)} zł`}</p>
         <p className="text-sm font-medium text-white">netto / miesiąc</p>
       </div>
     </div>
