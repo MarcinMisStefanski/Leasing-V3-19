@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export default function LeasingCalculator() {
-  const [price, setPrice] = useState(229990);
+  const [price, setPrice] = useState(229900);
   const [initialPercent, setInitialPercent] = useState(20);
   const [finalPercent, setFinalPercent] = useState(30);
   const [term, setTerm] = useState(35);
@@ -28,8 +28,7 @@ export default function LeasingCalculator() {
     const rrso = rrsoBase[term] + leasingMargin;
     const monthlyRate = Math.pow(1 + rrso / 100, 1 / 12) - 1;
     const n = term;
-    const pmt = ((financed - final / Math.pow(1 + monthlyRate, n)) * monthlyRate) /
-      (1 - Math.pow(1 + monthlyRate, -n));
+    const pmt = ((financed - final / Math.pow(1 + monthlyRate, n)) * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -n));
     setRate(pmt);
     setWarning(initial < 30000);
   }, [price, initialPercent, finalPercent, term]);
@@ -37,56 +36,62 @@ export default function LeasingCalculator() {
   const priceNet = price / 1.23;
   const initialPayment = (initialPercent / 100) * priceNet;
   const finalPayment = (finalPercent / 100) * priceNet;
-  const rateBrutto = rate * 1.23;
 
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-10 font-sans">
-      <div className="flex justify-between items-center mb-8">
-        <img src="/logo.png" alt="EVdlaCiebie" className="h-12 object-contain" />
-        <h1 className="text-4xl font-extrabold text-red-600">Kalkulator Leasingu</h1>
-      </div>
-
-      <div className="text-xl font-medium text-center mb-6">
-        Cena brutto (PLN):
+    <div className="max-w-3xl mx-auto p-6 bg-white rounded-2xl shadow-lg space-y-6">
+      <div>
+        <label className="block font-bold mb-1">Cena samochodu brutto (zł)</label>
         <input
           type="number"
           value={price}
           onChange={(e) => setPrice(Number(e.target.value))}
-          className="text-center text-2xl font-bold w-48 ml-4 border-b-2 border-red-600 focus:outline-none"
+          className="w-full p-3 border-2 border-gray-300 rounded-xl font-bold text-lg"
         />
       </div>
 
-      <div className="grid gap-6">
-        <div>
-          <p className="font-semibold text-lg mb-1">Wkład własny: {initialPercent}% ({initialPayment.toLocaleString(undefined, { maximumFractionDigits: 0 })} zł)</p>
-          <input type="range" min={0} max={45} value={initialPercent} onChange={(e) => setInitialPercent(Number(e.target.value))} className="w-full accent-red-600" />
-        </div>
-        <div>
-          <p className="font-semibold text-lg mb-1">Wykup końcowy: {finalPercent}% ({finalPayment.toLocaleString(undefined, { maximumFractionDigits: 0 })} zł)</p>
-          <input type="range" min={term === 24 ? 18 : 1} max={term === 24 ? 60 : term === 35 ? 50 : term === 47 ? 40 : 30} value={finalPercent} onChange={(e) => setFinalPercent(Number(e.target.value))} className="w-full accent-red-600" />
-        </div>
-        <div>
-          <p className="font-semibold text-lg mb-1">Okres leasingu:</p>
-          <select value={term} onChange={(e) => setTerm(Number(e.target.value))} className="w-full p-3 border rounded-md text-lg">
-            <option value={24}>24 miesiące</option>
-            <option value={35}>35 miesięcy</option>
-            <option value={47}>47 miesięcy</option>
-            <option value={59}>59 miesięcy</option>
-          </select>
-        </div>
+      <div>
+        <label className="block font-bold mb-1">Wkład własny (%)</label>
+        <input
+          type="range"
+          min="0"
+          max="45"
+          value={initialPercent}
+          onChange={(e) => setInitialPercent(Number(e.target.value))}
+          className="w-full h-5 rounded-lg appearance-none bg-gray-300"
+        />
+        <div className="mt-1 font-bold text-right">{initialPercent}%</div>
       </div>
 
-      {warning && (
-        <div className="text-red-600 text-center font-semibold text-sm mt-4">
-          ⚠️ Wkład własny musi wynosić minimum 30 000 zł netto, aby skorzystać z dotacji „NaszEauto”.
-        </div>
-      )}
+      <div>
+        <label className="block font-bold mb-1">Wykup (%)</label>
+        <input
+          type="range"
+          min="1"
+          max="60"
+          value={finalPercent}
+          onChange={(e) => setFinalPercent(Number(e.target.value))}
+          className="w-full h-5 rounded-lg appearance-none bg-gray-300"
+        />
+        <div className="mt-1 font-bold text-right">{finalPercent}%</div>
+        {warning && <div className="text-red-600 font-bold mt-2">Minimalny wkład to 30 000 zł</div>}
+      </div>
 
-      <div className="text-center bg-gradient-to-br from-blue-900 to-blue-700 text-yellow-400 py-6 rounded-xl mt-8 shadow-md">
-        <p className="text-4xl font-extrabold">
-          {isNaN(rate) ? "—" : `${rate.toFixed(2)} zł netto / ${(rateBrutto).toFixed(2)} zł brutto`}
-        </p>
-        <p className="text-sm font-medium text-white">rata miesięczna</p>
+      <div>
+        <label className="block font-bold mb-1">Okres leasingu (miesiące)</label>
+        <input
+          type="range"
+          min="24"
+          max="59"
+          step="1"
+          value={term}
+          onChange={(e) => setTerm(Number(e.target.value))}
+          className="w-full h-5 rounded-lg appearance-none bg-gray-300"
+        />
+        <div className="mt-1 font-bold text-right">{term} miesięcy</div>
+      </div>
+
+      <div className="text-center bg-gray-100 p-4 rounded-xl text-2xl font-bold">
+        Rata miesięczna: {rate.toFixed(2)} zł
       </div>
     </div>
   );
