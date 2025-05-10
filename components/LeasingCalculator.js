@@ -20,7 +20,6 @@ export default function LeasingCalculator() {
 
   useEffect(() => {
     if (!rrsoBase[term]) return;
-
     const net = price / 1.23;
     const initial = (initialPercent / 100) * net;
     const final = (finalPercent / 100) * net;
@@ -33,63 +32,28 @@ export default function LeasingCalculator() {
     setWarning(initial < 30000);
   }, [price, initialPercent, finalPercent, term]);
 
-  const priceNet = price / 1.23;
-  const initialPayment = (initialPercent / 100) * priceNet;
-  const finalPayment = (finalPercent / 100) * priceNet;
-
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-2xl shadow-lg space-y-6">
       <div>
         <label className="block font-bold mb-1">Cena samochodu brutto (zł)</label>
-        <input
-          type="number"
-          value={price}
-          onChange={(e) => setPrice(Number(e.target.value))}
-          className="w-full p-3 border-2 border-gray-300 rounded-xl font-bold text-lg"
-        />
+        <input type="number" value={price} onChange={(e) => setPrice(Number(e.target.value))} className="w-full p-3 border-2 border-gray-300 rounded-xl font-bold text-lg" />
       </div>
-
       <div>
         <label className="block font-bold mb-1">Wkład własny (%)</label>
-        <input
-          type="range"
-          min="0"
-          max="45"
-          value={initialPercent}
-          onChange={(e) => setInitialPercent(Number(e.target.value))}
-          className="w-full h-5 rounded-lg appearance-none bg-gray-300"
-        />
+        <input type="range" min="0" max="45" value={initialPercent} onChange={(e) => setInitialPercent(Number(e.target.value))} className="w-full h-3 rounded-lg appearance-none bg-gray-300" />
         <div className="mt-1 font-bold text-right">{initialPercent}%</div>
       </div>
-
       <div>
         <label className="block font-bold mb-1">Wykup (%)</label>
-        <input
-          type="range"
-          min="1"
-          max="60"
-          value={finalPercent}
-          onChange={(e) => setFinalPercent(Number(e.target.value))}
-          className="w-full h-5 rounded-lg appearance-none bg-gray-300"
-        />
+        <input type="range" min="1" max="60" value={finalPercent} onChange={(e) => setFinalPercent(Number(e.target.value))} className="w-full h-3 rounded-lg appearance-none bg-gray-300" />
         <div className="mt-1 font-bold text-right">{finalPercent}%</div>
         {warning && <div className="text-red-600 font-bold mt-2">Minimalny wkład to 30 000 zł</div>}
       </div>
-
       <div>
-        <label className="block font-bold mb-1">Okres leasingu (miesiące)</label>
-        <input
-          type="range"
-          min="24"
-          max="59"
-          step="1"
-          value={term}
-          onChange={(e) => setTerm(Number(e.target.value))}
-          className="w-full h-5 rounded-lg appearance-none bg-gray-300"
-        />
+        <label className="block font-bold mb-1">Okres leasingu (miesięcy)</label>
+        <input type="range" min="24" max="59" step="1" value={term} onChange={(e) => setTerm(Number(e.target.value))} className="w-full h-3 rounded-lg appearance-none bg-gray-300" />
         <div className="mt-1 font-bold text-right">{term} miesięcy</div>
       </div>
-
       <div className="text-center bg-gray-100 p-4 rounded-xl text-2xl font-bold">
         Rata miesięczna: {rate.toFixed(2)} zł
       </div>
