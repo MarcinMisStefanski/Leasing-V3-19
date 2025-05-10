@@ -10,13 +10,18 @@ export default function LeasingCalculator() {
 
   const rrsoBase = { 24: 4.7766, 35: 4.4432, 47: 4.2618, 59: 4.1816 };
   const leasingMargin = 2.5;
+  const termLimits = {
+    24: [18, 60],
+    35: [1, 50],
+    47: [1, 40],
+    59: [1, 30]
+  };
 
   useEffect(() => {
-    const limits = { 24: [18, 60], 35: [1, 50], 47: [1, 40], 59: [1, 30] };
-    const [min, max] = limits[term] || [1, 60];
+    const [min, max] = termLimits[term] || [1, 60];
     if (finalPercent < min) setFinalPercent(min);
     if (finalPercent > max) setFinalPercent(max);
-  }, [term]);
+  }, [term, finalPercent]);
 
   useEffect(() => {
     if (!rrsoBase[term]) return;
@@ -45,15 +50,23 @@ export default function LeasingCalculator() {
       </div>
       <div>
         <label className="block font-bold mb-1">Wykup (%)</label>
-        <input type="range" min="1" max="60" value={finalPercent} onChange={(e) => setFinalPercent(Number(e.target.value))} className="w-full h-3 rounded-lg appearance-none bg-gray-300" />
+        <input type="range" min={termLimits[term][0]} max={termLimits[term][1]} value={finalPercent} onChange={(e) => setFinalPercent(Number(e.target.value))} className="w-full h-3 rounded-lg appearance-none bg-gray-300" />
         <div className="mt-1 font-bold text-right">{finalPercent}%</div>
-        {warning && <div className="text-red-600 font-bold mt-2">Minimalny wkład to 30 000 zł</div>}
       </div>
       <div>
         <label className="block font-bold mb-1">Okres leasingu (miesięcy)</label>
-        <input type="range" min="24" max="59" step="1" value={term} onChange={(e) => setTerm(Number(e.target.value))} className="w-full h-3 rounded-lg appearance-none bg-gray-300" />
-        <div className="mt-1 font-bold text-right">{term} miesięcy</div>
+        <select value={term} onChange={(e) => setTerm(Number(e.target.value))} className="w-full p-3 border-2 border-gray-300 rounded-xl font-bold text-lg">
+          <option value={24}>24 miesięcy</option>
+          <option value={35}>35 miesięcy</option>
+          <option value={47}>47 miesięcy</option>
+          <option value={59}>59 miesięcy</option>
+        </select>
       </div>
+      {warning && (
+        <div className="text-red-600 font-bold mt-2">
+          Minimalny wkład to 30 000 zł netto
+        </div>
+      )}
       <div className="text-center bg-gray-100 p-4 rounded-xl text-2xl font-bold">
         Rata miesięczna: {rate.toFixed(2)} zł
       </div>
