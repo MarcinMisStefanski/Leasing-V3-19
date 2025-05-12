@@ -1,5 +1,5 @@
 {
-  "name": "leasing-v3-fastfix",
+  "name": "leasing-v3-fastfix-full",
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev",

@@ -37,8 +37,13 @@ export default function LeasingCalculator() {
     setWarning(initial < 30000);
   }, [price, initialPercent, finalPercent, term]);
 
+  const formatCurrency = (value) => new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(value);
+
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-2xl shadow-lg space-y-6">
+      <div className="flex justify-center mb-6">
+        <img src="/logo.png" alt="EV Logo" className="h-16" />
+      </div>
       <div>
         <label className="block font-bold mb-1">Cena samochodu brutto (zł)</label>
         <input type="number" value={price} onChange={(e) => setPrice(Number(e.target.value))} className="w-full p-3 border-2 border-gray-300 rounded-xl font-bold text-lg" />
@@ -46,12 +51,12 @@ export default function LeasingCalculator() {
       <div>
         <label className="block font-bold mb-1">Wkład własny (%)</label>
         <input type="range" min="0" max="45" value={initialPercent} onChange={(e) => setInitialPercent(Number(e.target.value))} className="w-full h-3 rounded-lg appearance-none bg-gray-300" />
-        <div className="mt-1 font-bold text-right">{initialPercent}%</div>
+        <div className="mt-1 font-bold text-right">{initialPercent}% ({formatCurrency((initialPercent / 100) * price / 1.23)})</div>
       </div>
       <div>
         <label className="block font-bold mb-1">Wykup (%)</label>
         <input type="range" min={termLimits[term][0]} max={termLimits[term][1]} value={finalPercent} onChange={(e) => setFinalPercent(Number(e.target.value))} className="w-full h-3 rounded-lg appearance-none bg-gray-300" />
-        <div className="mt-1 font-bold text-right">{finalPercent}%</div>
+        <div className="mt-1 font-bold text-right">{finalPercent}% ({formatCurrency((finalPercent / 100) * price / 1.23)})</div>
       </div>
       <div>
         <label className="block font-bold mb-1">Okres leasingu (miesięcy)</label>
