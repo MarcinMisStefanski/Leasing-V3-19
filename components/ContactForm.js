@@ -32,7 +32,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-md p-6 space-y-4 mt-10">
+    <form onSubmit={handleSubmit} className="max-w-xl mx-auto bg-white rounded-xl shadow-md p-6 space-y-4 mt-10">
       <h2 className="text-2xl font-bold">Otrzymaj ofertę</h2>
       <div>
         <label className="block font-bold mb-1">NIP</label>

@@ -40,7 +40,7 @@ export default function LeasingCalculator() {
   const formatCurrency = (value) => new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(value);
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-2xl shadow-lg space-y-6">
+    <div className="max-w-xl mx-auto p-6 bg-white rounded-2xl shadow-lg space-y-6">
       <div className="flex justify-center mb-6">
         <img src="/logo.png" alt="EV Logo" className="h-16" />
       </div>
